@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <link rel="stylesheet" href="users.css" />
+  </head>
+  <body>
+    <div class="user-list-container">
+      <h1>User List</h1>
+      <div id="user-list"></div>
+      <a class="back-link" href="/">Register a new user</a>
+    </div>
+
+    <script>
+      async function fetchUsers() {
+        const response = await fetch('/users');
+        const users = await response.json();
+        const userList = document.getElementById('user-list');
+
+        users.forEach((user) => {
+          const userItem = document.createElement('div');
+          userItem.className = 'user-item';
+          userItem.innerHTML = `
+                    <span>${user.fullName} (${user.email})</span>
+                    <div>
+                        <button onclick="editUser('${user._id}')">Edit</button>
+                        <button onclick="deleteUser('${user._id}')">Delete</button>
+                    </div>
+                `;
+          userList.appendChild(userItem);
+        });
+      }
+
+      async function editUser(userId) {
+        const newFullName = prompt('Enter new full name:');
+        const newEmail = prompt('Enter new email:');
+        const newPassword = prompt('Enter new password:');
+
+        const response = await fetch(`/users/${userId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            fullName: newFullName,
+            email: newEmail,
+            password: newPassword,
+          }),
+        });
+
+        if (response.ok) {
+          alert('User updated successfully');
+          window.location.reload();
+        } else {
+          alert('Failed to update user');
+        }
+      }
+
+      async function deleteUser(userId) {
+        const response = await fetch(`/users/${userId}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          alert('User deleted successfully');
+          window.location.reload();
+        } else {
+          alert('Failed to delete user');
+        }
+      }
+
+      window.onload = fetchUsers;
+    </script>
+  </body>
+</html>

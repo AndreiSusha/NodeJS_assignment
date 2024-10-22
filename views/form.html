@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Account</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="main">
+      <div class="registration">
+        <form id="registrationForm" action="/register" method="POST">
+          <div class="create_acc">Create new account</div>
+
+          <div class="input-container">
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              class="input-field"
+              placeholder="Enter your full name..."
+              required
+            />
+          </div>
+
+          <div class="input-container">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="input-field"
+              placeholder="Enter email..."
+              required
+            />
+          </div>
+
+          <div class="input-container">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="input-field"
+              placeholder="Enter password..."
+              required
+            />
+          </div>
+
+          <button type="submit" class="submit_btn">Create</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
